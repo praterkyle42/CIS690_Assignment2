@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <title>Hello, world!</title>
+  </head>
+ 
+  <body>
+    <div id="main">
+        <h1>Sales Price Calculator</h1>
+        <form id="calculator-input">
+            <div class="form-group">
+                <label for="sale-amount-textbox">Sale Amount: </label>
+                <input type="text" class="form-control" id="sale-amount-textbox">
+            </div>
+            <div class="form-group">
+                <label for="sales-tax-percentage">Sales Tax Percentage: </label>
+                <input type="text" class="form-control" id="sales-tax-percentage">
+            </div>
+            <div class="form-inline buttons">
+                 <button type="button" class="btn btn-primary" id="calculate-btn">Calculate</button>
+                 <button type="button" class="btn btn-secondary" id="clear-btn">Clear</button>
+            </div>
+        </form>
+
+        <div id="output">
+          <span class="output-span">Your final sale price is $<span class="output-span" id="price">0.00</span></span>
+        </div>
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        //When the page loads, focus on the sales amount textbox and hide the output div
+        $("#sale-amount-textbox").focus();
+        $("#output").hide();
+
+        //Bind the enter key to the calculate button so that the calculate function fires after enter is pressed
+        $(document).keypress(function(e){
+    if (e.which == 13){
+        $("#calculate-btn").click();
+        }
+        });
+        
+        //Calculate Sales Tax after clicking "Calculate"
+        $("#calculate-btn").click(function(){
+          $("#output").fadeIn(2000);
+          let salesAmt = $("#sale-amount-textbox").val();
+          let salesTaxPercentage = $("#sales-tax-percentage").val();
+        
+          if(isNaN(salesAmt) && isNaN(salesTaxPercentage)) {
+            alert("Invalid Sales Amount and Sales Tax Percentage. Please enter numbers for these values");
+            return;
+          }
+          else if(isNaN(salesAmt)) {
+          alert("Invalid Sales Amount. Please enter a number");
+          return;
+          }
+          else if(isNaN(salesTaxPercentage)) {
+            alert("Invalid Sales Tax Percentage. Please enter a number")
+            return;
+          }
+          Number(salesAmt);
+          Number(salesTaxPercentage);
+          salesTaxPercentage /= 100;
+        
+          let totalSalesAmt = Number(salesAmt) + (Number(salesAmt) * Number(salesTaxPercentage));
+          totalSalesAmt = totalSalesAmt.toFixed(2);
+          $("#price").text(totalSalesAmt);
+        })
+        
+        //Fade out and clear input fields after clicking "Clear"
+        $("#clear-btn").click(function() {
+          $("#sale-amount-textbox").val(" "); 
+          $("#sales-tax-percentage").val(" ");
+          $("#output").fadeOut(500);
+          $("#sale-amount-textbox").focus();
+        })
+      });
+  </script>
+  </body>
+    
+</html>
